@@ -1,1 +1,2 @@
 # InventorySO
+・ScriptableObjectで作成したInventoryの実装方法

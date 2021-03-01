@@ -10,9 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cdf531c95f9f4450ebe4dad829113fc4, type: 3}
-  m_Name: EquipmentObject
+  m_Name: Sord0SO
   m_EditorClassIdentifier: 
-  name: "\u5263"
+  name: "\u52630"
   type: 1
   description: 
-  buffs: []
+  buffs:
+  - attribute: 3
+    value: 10

@@ -9,9 +9,9 @@ public class InventoryObject : ScriptableObject
     // アイテムを全体管理:関数を持っている
     // ゲーム内で引き出す
     // セーブ&ロード
-
+    const string SAVE_KEY = "SAVE_KEY";
     
-    public ItemDatabaseObject database; // データを引き出すときに使う
+    // public ItemDatabaseObject database; // データを引き出すときに使う? なんのために使う？
 
     public List<InventorySlot> items = new List<InventorySlot>();
     // データセット
@@ -19,13 +19,13 @@ public class InventoryObject : ScriptableObject
     {
         for (int i=0; i< items.Count; i++)
         {
-            if (items[i].item.id == item.id)
+            if (items[i].item == item)
             {
                 items[i].AddAmount(amount);
                 return;
             }
         }
-        items.Add(new InventorySlot(item.id, item, amount));
+        items.Add(new InventorySlot(item, amount));
     }
 
     // Save/Load/Clear関係
@@ -33,18 +33,27 @@ public class InventoryObject : ScriptableObject
     public void Save()
     {
         Debug.Log("Saveの予定");
+        string json = JsonUtility.ToJson(this, true);
+        PlayerPrefs.SetString(SAVE_KEY, json);
+        Debug.Log(json);
     }
 
     [ContextMenu("Load")]
     public void Load()
     {
         Debug.Log("Loadの予定");
+        if (PlayerPrefs.HasKey(SAVE_KEY))
+        {
+            
+            string json = PlayerPrefs.GetString(SAVE_KEY);
+            JsonUtility.FromJsonOverwrite(json, this);
+
+        }
     }
     [ContextMenu("Clear")]
     public void Clear()
     {
         Debug.Log("データClearの予定");
-        items.Clear();
         items.Clear();
     }
 }
@@ -53,27 +62,23 @@ public class InventoryObject : ScriptableObject
 [Serializable]
 public class InventorySlot // Slot:どんなアイテムが何個入っているか
 {
-    public int id;
     public Item item;
     public int amount;
 
     public InventorySlot()
     {
-        id = -1;
         item = null;
         amount = 0;
     }
 
-    public InventorySlot(int id, Item item, int amount)
+    public InventorySlot(Item item, int amount)
     {
-        this.id = id;
         this.item = item;
         this.amount = amount;
     }
 
-    public void UpdateSlot(int id, Item item, int amount)
+    public void UpdateSlot(Item item, int amount)
     {
-        this.id = id;
         this.item = item;
         this.amount = amount;
     }

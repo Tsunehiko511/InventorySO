@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 691c1e131844c4d4da73af54a4ec1cac, type: 3}
   m_Name: FoodObject
   m_EditorClassIdentifier: 
-  id: 0
+  name: "\u85AC\u8349"
   type: 0
   description: 
+  buffs: []
